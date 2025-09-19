@@ -171,14 +171,12 @@
             </div>
         </div>
     </footer>
-
     <script type="text/javascript">
         window.onload = function() {
             document.getElementById('contact-form').addEventListener('submit', function(event) {
                 event.preventDefault(); // Prevent default form submission
                 const form = this;
                 const time = new Date().toLocaleString(); // Generate current timestamp
-                <form>
 
                 emailjs.send('service_2bcnjcb', 'template_hd5t0jq', {
                     name: form.querySelector('[name="name"]').value,
@@ -195,8 +193,9 @@
                 });
             });
         }
-           <form>
+           
     </script>
 </body>
 
 </html>
+
