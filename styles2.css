@@ -297,7 +297,7 @@ body {
 .footer {
     background: #2c3e50;
     color: white;
-    padding: 40px 0;
+    padding: 100px 0;
     text-align: center;
 }
 
@@ -389,4 +389,5 @@ body {
     .products-grid {
         gap: 40px;
     }
+
 }
