@@ -39,7 +39,7 @@
     <section class="hero">
         <div class="carousel-container">
             <div class="carousel-slide active">
-                <img src= "Dahua-banner.jpg" alt="Security Equipment">
+                <img src="Dahua-banner.jpg" alt="Security Equipment">
                 <div class="slide-content">
                     <h2>Advanced Security Solutions</h2>
                     <p>Protecting what matters most with cutting-edge technology and professional installation services.</p>
@@ -66,9 +66,9 @@
         <button class="carousel-arrow prev" onclick="changeSlide(-1)">❮</button>
         <button class="carousel-arrow next" onclick="changeSlide(1)">❯</button>
         <div class="carousel-nav">
-            <div class="carousel-dot active" onclick="currentSlide(1)"></div>
-            <div class="carousel-dot" onclick="currentSlide(2)"></div>
-            <div class="carousel-dot" onclick="currentSlide(3)"></div>
+            <div class="carousel-dot active" onclick="currentSlide(1)"> </div>
+            <div class="carousel-dot" onclick="currentSlide(2)"> </div>
+            <div class="carousel-dot" onclick="currentSlide(3)"> </div>
         </div>
     </section>
 
@@ -136,8 +136,8 @@
                 </div>
                 <div class="footer-section">
                     <h3>Contact Info</h3>
-                    <a href= developers.html> Developers </a>
-                    <a href= "https://www.facebook.com/Panramaheadoffice">📧 panramatechnologies.com</a>
+                    <a href="developers.html">Developers</a>
+                    <a href="https://www.facebook.com/Panramaheadoffice">📧 panramatechnologies.com</a>
                     <p>📞 (091) 653 7266</p>
                     <p>📍 Baliwag, Bulacan</p>
                 </div>
@@ -154,11 +154,22 @@
         const dots = document.querySelectorAll('.carousel-dot');
 
         function showSlide(index) {
-            slides.forEach(slide => slide.classList.remove('active'));
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+                const content = slide.querySelector('.slide-content');
+                if (content) content.classList.remove('visible');
+            });
             dots.forEach(dot => dot.classList.remove('active'));
             
             slides[index].classList.add('active');
             dots[index].classList.add('active');
+        }
+
+        function toggleSlideContent(index) {
+            const content = slides[index].querySelector('.slide-content');
+            if (content) {
+                content.classList.toggle('visible');
+            }
         }
 
         function changeSlide(direction) {
@@ -178,6 +189,14 @@
             showSlide(currentSlideIndex);
         }
 
+        // Add click event listeners to images
+        slides.forEach((slide, index) => {
+            const img = slide.querySelector('img');
+            img.addEventListener('click', () => {
+                toggleSlideContent(index);
+            });
+        });
+
         // Auto-advance slides every 5 seconds
         setInterval(() => {
             changeSlide(1);
@@ -187,13 +206,4 @@
         showSlide(0);
     </script>
 </body>
-
 </html>
-
-
-
-
-
-
-
-
