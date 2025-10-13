@@ -110,9 +110,9 @@ body {
 
 /* Hero Section with Carousel */
 .hero {
-    margin-top: 120px;
+    margin-top: 0; /* Removed margin-top to eliminate space below header */
     position: relative;
-    height: 500px;
+    height: calc(100vh - 60px); /* Full viewport height minus header height (main-nav padding: 15px * 2 + content height) */
     overflow: hidden;
 }
 
@@ -445,8 +445,7 @@ body {
 /* Responsive Design */
 @media (max-width: 768px) {
     .hero {
-        margin-top: 100px;
-        height: 400px;
+        height: calc(100vh - 50px); /* Adjust for smaller header height */
     }
 
     .carousel-container {
@@ -599,8 +598,7 @@ body {
     }
 
     .hero {
-        margin-top: 80px;
-        height: 300px;
+        height: calc(100vh - 40px); /* Adjust for smaller header height */
     }
 
     .slide-content h2 {
