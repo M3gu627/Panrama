@@ -1,284 +1,43 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Developers - Panrama Technologies</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #333;
-        }
-
-        /* Header */
-        .header {
-            background: #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-        }
-
-        .top-bar {
-            background: #f8f9fa;
-            padding: 15px 30px;
-            font-size: 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .contact-info, .social-links {
-            display: flex;
-            gap: 30px;
-        }
-
-        .social-links a {
-            color: #666;
-            text-decoration: none;
-            font-size: 16px;
-        }
-
-        .social-links a:hover {
-            color: #007bff;
-        }
-
-        .main-nav {
-            padding: 20px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 26px;
-            font-weight: bold;
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 40px;
-        }
-
-        .nav-menu a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-        }
-
-        .nav-menu a:hover {
-            color: #007bff;
-        }
-
-        /* Developers Section */
-        .developers-section {
-            padding: 140px 30px 80px;
-            background: #f8f9fa;
-            text-align: center;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .developers-section h2 {
-            font-size: 40px;
-            margin-bottom: 30px;
-        }
-
-        .company-name {
-            color: #007bff;
-        }
-
-        .developers-section p {
-            font-size: 18px;
-            color: #666;
-            max-width: 800px;
-            margin: 0 auto 60px;
-        }
-
-        .developers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjusted for narrower cards */
-            gap: 30px;
-        }
-
-        .developer-card {
-            background: #fff;
-            border-radius: 12px; /* Slightly larger border-radius for aesthetic */
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            overflow: hidden;
-            transition: transform 0.3s ease;
-            max-width: 220px; /* Narrower width for portrait layout */
-            margin: 0 auto; /* Center cards in grid */
-        }
-
-        .developer-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .developer-card img {
-            width: 100%;
-            height: 300px; /* Taller for portrait orientation */
-            object-fit: cover;
-        }
-
-        .developer-info {
-            padding: 20px;
-        }
-
-        .developer-info h3 {
-            font-size: 20px;
-            margin-bottom: 12px;
-        }
-
-        .developer-info p {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 12px;
-        }
-
-        .developer-info a {
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        .developer-info a:hover {
-            text-decoration: underline;
-        }
-
-        /* Footer */
-        .footer {
-            background: #2c3e50;
-            color: #fff;
-            padding: 40px 20px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .footer-section h3 {
-            color: #007bff;
-            margin-bottom: 15px;
-        }
-
-        .footer-section a, .footer-section p {
-            color: #bdc3c7;
-            text-decoration: none;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .footer-section a:hover {
-            color: #007bff;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid #34495e;
-            padding-top: 20px;
-            text-align: center;
-            color: #95a5a6;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .top-bar, .main-nav {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .nav-menu {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .contact-info, .social-links {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .developers-section h2 {
-                font-size: 32px;
-            }
-
-            .developers-section {
-                padding: 120px 20px 60px;
-            }
-
-            .developers-grid {
-                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Slightly smaller for mobile */
-            }
-
-            .developer-card {
-                max-width: 200px; /* Adjusted for mobile */
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="developers.css">
+    <!-- XLSX Library for potential file handling -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
     <!-- Header -->
     <header class="header">
+        <div class="top-bar">
+            <div class="container">
+                <div class="contact-info">
+                    <span>📧 About Us</span>
+                    <span>📞 Contact Us</span>
+                    <span>📱 (091) 653 7266</span>
+                </div>
+                <div class="social-links">
+                    <a href="#">📘</a>
+                    <a href="#">🐦</a>
+                    <a href="#">💼</a>
+                </div>
+            </div>
+        </div>
         <nav class="main-nav">
-            <div class="logo">Panrama Technologies</div>
-            <ul class="nav-menu">
-                <li><a href="index.html">HOME</a></li>
-                <li><a href="about.html">ABOUT</a></li>
-                <li><a href="projects.html">PROJECTS</a></li>
-                <li><a href="products.html">PRODUCTS</a></li>
-                <li><a href="contact.html">CONTACT US</a></li>
-            </ul>
+            <div class="container">
+                <div class="logo">Panrama Technologies</div>
+                <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+                <ul class="nav-menu">
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="about.html">ABOUT</a></li>
+                    <li><a href="projects.html">PROJECTS</a></li>
+                    <li><a href="products.html">PRODUCTS</a></li>
+                    <li><a href="contact.html">CONTACT US</a></li>
+                    <li><a href="#" class="active">DEVELOPERS</a></li>
+                </ul>
+            </div>
         </nav>
     </header>
 
@@ -290,38 +49,34 @@
             <div class="developers-grid">
                 <!-- Developer 1 -->
                 <div class="developer-card">
-                    <img src="martin.jpg" alt="John Doe">
+                    <img src="martin.jpg" alt="Martin Gaspar">
                     <div class="developer-info">
                         <h3>Martin Gaspar</h3>
-                        <p>MY NAME IS GASPAR ALLUH AKHBAR!.</p>  
-                        </div>
+                        <p>Lead Developer with expertise in security system integration.</p>
                     </div>
                 </div>
                 <!-- Developer 2 -->
                 <div class="developer-card">
-                    <img src="inigo.jpg" alt="Jane Smith">
+                    <img src="inigo.jpg" alt="Rey Inigo Castillo">
                     <div class="developer-info">
                         <h3>Rey Inigo Castillo</h3>
-                        <p>Napwetan ni flores</p>
-                        </div>
+                        <p>Software Engineer specializing in IoT and network solutions.</p>
                     </div>
                 </div>
                 <!-- Developer 3 -->
                 <div class="developer-card">
-                    <img src="bangdud.jpg" alt="Michael Lee">
+                    <img src="bangdud.jpg" alt="Jan Gabriel Bangdud">
                     <div class="developer-info">
                         <h3>Jan Gabriel Bangdud</h3>
-                        <p>Burnik lang diretso</p>
-                        </div>
+                        <p>Frontend Developer focused on user-friendly interfaces.</p>
                     </div>
                 </div>
                 <!-- Developer 4 -->
                 <div class="developer-card">
-                    <img src="flores.jpg" alt="Emily Chen">
+                    <img src="flores.jpg" alt="Angelo Flores">
                     <div class="developer-info">
                         <h3>Angelo Flores</h3>
-                        <p>Pwinetan si Inigo</p>
-                        </div>
+                        <p>Backend Developer with a passion for secure APIs.</p>
                     </div>
                 </div>
             </div>
@@ -329,7 +84,7 @@
     </section>
 
     <!-- Footer -->
-     <footer class="footer">
+    <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
@@ -346,8 +101,8 @@
                 </div>
                 <div class="footer-section">
                     <h3>Contact Info</h3>
-                    <a href= developers.html> Developers </a>
-                    <a href= "https://www.facebook.com/Panramaheadoffice">📧 panramatechnologies.com</a>
+                    <a href="developers.html">Developers</a>
+                    <a href="https://www.facebook.com/Panramaheadoffice">📧 panramatechnologies.com</a>
                     <p>📞 (091) 653 7266</p>
                     <p>📍 Baliwag, Bulacan</p>
                 </div>
@@ -357,5 +112,64 @@
             </div>
         </div>
     </footer>
+
+    <script type="text/javascript">
+        // Toggle mobile menu
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // XLSX File Handling
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+
+        function filledCell(cell) {
+            return cell !== '' && cell != null;
+        }
+
+        function loadFileData(filename) {
+            if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+                try {
+                    var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                    var firstSheetName = workbook.SheetNames[0];
+                    var worksheet = workbook.Sheets[firstSheetName];
+
+                    // Convert sheet to JSON to filter blank rows
+                    var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                    // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                    var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                    // Heuristic to find the header row
+                    var headerRowIndex = filteredData.findIndex((row, index) =>
+                        row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                    );
+                    // Fallback
+                    if (headerRowIndex === -1 || headerRowIndex > 25) {
+                        headerRowIndex = 0;
+                    }
+
+                    // Convert filtered JSON back to CSV
+                    var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
+                    csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                    return csv;
+                } catch (e) {
+                    console.error(e);
+                    return "";
+                }
+            }
+            return gk_fileData[filename] || "";
+        }
+    </script>
 </body>
 </html>
