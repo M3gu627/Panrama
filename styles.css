@@ -130,6 +130,7 @@ body {
     width: 100%;
     height: 600px;
     object-fit: cover;
+    cursor: pointer; /* Add cursor pointer to indicate clickability */
 }
 
 .slide-content {
@@ -143,6 +144,11 @@ body {
     padding: 40px;
     border-radius: 10px;
     max-width: 600px;
+    display: none; /* Hide by default */
+}
+
+.slide-content.visible {
+    display: block; /* Show when visible class is added */
 }
 
 .slide-content h2 {
