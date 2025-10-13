@@ -17,9 +17,24 @@
 </head>
 <body>
     <header class="header">
+        <div class="top-bar">
+            <div class="container">
+                <div class="contact-info">
+                    <span>📧 About Us</span>
+                    <span>📞 Contact Us</span>
+                    <span>📱 (091) 653 7266</span>
+                </div>
+                <div class="social-links">
+                    <a href="#">📘</a>
+                    <a href="#">🐦</a>
+                    <a href="#">💼</a>
+                </div>
+            </div>
+        </div>
         <nav class="main-nav">
             <div class="container">
                 <div class="logo">Panrama Technologies</div>
+                <button class="menu-toggle" aria-label="Toggle menu">☰</button>
                 <ul class="nav-menu">
                     <li><a href="index.html">HOME</a></li>
                     <li><a href="about.html">ABOUT</a></li>
@@ -121,7 +136,7 @@
         </div>
     </section>
 
-        <footer class="footer">
+    <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
@@ -138,8 +153,8 @@
                 </div>
                 <div class="footer-section">
                     <h3>Contact Info</h3>
-                    <a href= developers.html> Developers </a>
-                    <a href= "https://www.facebook.com/Panramaheadoffice">📧 panramatechnologies.com</a>
+                    <a href="developers.html">Developers</a>
+                    <a href="https://www.facebook.com/Panramaheadoffice">📧 panramatechnologies.com</a>
                     <p>📞 (091) 653 7266</p>
                     <p>📍 Baliwag, Bulacan</p>
                 </div>
@@ -149,8 +164,24 @@
             </div>
         </div>
     </footer>
-    
+
     <script type="text/javascript">
+        // Toggle mobile menu
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // EmailJS form submission
         window.onload = function() {
             document.getElementById('contact-form').addEventListener('submit', function(event) {
                 event.preventDefault(); // Prevent default form submission
@@ -172,15 +203,6 @@
                 });
             });
         }
-           
     </script>
 </body>
-
 </html>
-
-
-
-
-
-
-
