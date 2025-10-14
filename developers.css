@@ -22,34 +22,8 @@ body {
     z-index: 1000;
 }
 
-.top-bar {
-    background: #f8f9fa;
-    padding: 10px 15px;
-    font-size: 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.contact-info, .social-links {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-.social-links a {
-    color: #666;
-    text-decoration: none;
-    font-size: 16px;
-    transition: color 0.3s ease;
-}
-
-.social-links a:hover {
-    color: #007bff;
-}
-
 .main-nav {
-    padding: 15px;
+    padding: 15px 0; /* Adjusted padding to control vertical spacing */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -58,7 +32,7 @@ body {
 .main-nav .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 15px;
+    padding: 0 30px; /* Increased horizontal padding for better spacing */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -69,19 +43,20 @@ body {
     font-size: 24px;
     font-weight: bold;
     color: #333;
+    padding: 5px 15px; /* Added padding around the logo for spacing */
 }
 
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 30px;
+    gap: 25px; /* Increased gap between navigation items */
 }
 
 .nav-menu a {
     text-decoration: none;
     color: #333;
     font-weight: 500;
-    padding: 10px 0;
+    padding: 10px 15px; /* Added horizontal padding to each link */
     transition: color 0.3s ease;
 }
 
@@ -350,3 +325,4 @@ body {
         font-size: 11px;
     }
 }
+
