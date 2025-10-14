@@ -43,7 +43,7 @@ body {
     font-size: 24px;
     font-weight: bold;
     color: #333;
-    padding: 5px 15px; /* Added padding around the logo for spacing */
+    padding: 10px 20px; /* Added padding around the logo for spacing */
 }
 
 .nav-menu {
@@ -325,4 +325,5 @@ body {
         font-size: 11px;
     }
 }
+
 
