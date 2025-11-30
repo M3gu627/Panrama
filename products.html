@@ -11,7 +11,7 @@
         <nav class="main-nav">
             <div class="container">
                 <div class="logo">Panrama Technologies</div>
-                <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+                <button class="menu-toggle" aria-label="Toggle menu">Menu</button>
                 <ul class="nav-menu">
                     <li><a href="index.html">HOME</a></li>
                     <li><a href="about.html">ABOUT</a></li>
@@ -314,6 +314,8 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
         </section>
 
         <section class="cta-section">
@@ -343,9 +345,9 @@
                 <div class="footer-section">
                     <h3>Contact Info</h3>
                     <a href="developers.html">Developers</a>
-                    <a href="https://www.facebook.com/Panramaheadoffice">📧 panramatechnologies.com</a>
-                    <p>📞 (091) 653 7266</p>
-                    <p>📍 Baliwag, Bulacan</p>
+                    <a href="https://www.facebook.com/Panramaheadoffice">Email: panramatechnologies.com</a>
+                    <p>Phone: (091) 653 7266</p>
+                    <p>Location: Baliwag, Bulacan</p>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -354,8 +356,20 @@
         </div>
     </footer>
 
+    <!-- ONLY THIS PART IS NEW (added right before </body>) -->
+    <div id="productModal" class="product-modal">
+        <div class="modal-content">
+            <span class="modal-close">×</span>
+            <h3 id="modal-title"></h3>
+            <div class="modal-body">
+                <p id="modal-desc"></p>
+                <ul id="modal-features"></ul>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Toggle mobile menu
+        // Your original mobile menu script
         const menuToggle = document.querySelector('.menu-toggle');
         const navMenu = document.querySelector('.nav-menu');
 
@@ -363,20 +377,40 @@
             navMenu.classList.toggle('active');
         });
 
-        // Close mobile menu when clicking a link
         navMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 navMenu.classList.remove('active');
             });
         });
+
+        // NEW: View Details Modal
+        const modal = document.getElementById('productModal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDesc = document.getElementById('modal-desc');
+        const modalFeatures = document.getElementById('modal-features');
+        const closeBtn = document.querySelector('.modal-close');
+
+        document.querySelectorAll('.btn-primary').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const card = this.closest('.product-card');
+                modalTitle.textContent = card.querySelector('h4').textContent;
+                modalDesc.textContent = card.querySelector('.product-info > p').textContent;
+
+                modalFeatures.innerHTML = '';
+                card.querySelectorAll('.feature').forEach(f => {
+                    const li = document.createElement('li');
+                    li.textContent = f.textContent;
+                    modalFeatures.appendChild(li);
+                });
+
+                modal.classList.add('show');
+            });
+        });
+
+        closeBtn.onclick = () => modal.classList.remove('show');
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('show');
+        });
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
