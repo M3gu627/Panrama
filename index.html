@@ -5,6 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panrama Technologies</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Carousel ── */
+    .hero { position: relative; width: 100%; overflow: hidden; }
+    .carousel-container { position: relative; width: 100%; height: 500px; }
+    .carousel-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.6s ease; }
+    .carousel-slide.active { opacity: 1; }
+    .carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: pointer; }
+    .slide-content { position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,.55); color: #fff; padding: 24px 32px; border-radius: 10px; text-align: center; max-width: 560px; width: 90%; opacity: 0; transition: opacity .4s; pointer-events: none; }
+    .slide-content.visible { opacity: 1; pointer-events: auto; }
+    .slide-content h2 { margin: 0 0 8px; font-size: 1.6rem; }
+    .slide-content p  { margin: 0 0 16px; font-size: .95rem; }
+    .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,.4); color: #fff; border: none; font-size: 1.4rem; padding: 10px 16px; cursor: pointer; border-radius: 4px; z-index: 10; transition: background .2s; }
+    .carousel-arrow:hover { background: rgba(0,0,0,.7); }
+    .carousel-arrow.prev { left: 12px; }
+    .carousel-arrow.next { right: 12px; }
+    .carousel-nav { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 10; }
+    .carousel-dot { width: 12px; height: 12px; background: rgba(255,255,255,.5); border-radius: 50%; cursor: pointer; transition: background .2s; }
+    .carousel-dot.active { background: #fff; }
+    @media (max-width: 600px) { .carousel-container { height: 260px; } .slide-content { bottom: 40px; padding: 14px 18px; } .slide-content h2 { font-size: 1.1rem; } }
+  </style>
   <!-- EmailJS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>emailjs.init({ publicKey: "HpAz5a_OP97O-dOhE" });</script>
@@ -23,7 +43,7 @@
           <li><a data-page="projects"                   onclick="showPage('projects')">PROJECTS</a></li>
           <li><a data-page="products"                   onclick="showPage('products')">PRODUCTS</a></li>
           <li><a data-page="contact"                    onclick="showPage('contact')">CONTACT US</a></li>
-          <li><a data-page="developers"                 onclick="showPage('developers')">DEVELOPERS</a></li>
+
         </ul>
       </div>
     </nav>
@@ -58,6 +78,42 @@
       <div class="scroll-indicator">
         <div class="scroll-line"></div>
         <span>SCROLL</span>
+      </div>
+    </section>
+
+    <section class="hero">
+      <div class="carousel-container">
+        <div class="carousel-slide active">
+          <img src="Dahua-banner.jpg" alt="Security Equipment">
+          <div class="slide-content">
+            <h2>Advanced Security Solutions</h2>
+            <p>Protecting what matters most with cutting-edge technology and professional installation services.</p>
+            <a href="#" class="btn">Explore Products</a>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <img src="hkvision.jpeg" alt="Access Control">
+          <div class="slide-content">
+            <h2>Access Control Systems</h2>
+            <p>Secure your premises with state-of-the-art access control and monitoring solutions.</p>
+            <a href="#" class="btn">Learn More</a>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <img src="Benica.png" alt="CCTV Systems">
+          <div class="slide-content">
+            <h2>CCTV Surveillance</h2>
+            <p>Professional CCTV systems for comprehensive monitoring and security management.</p>
+            <a href="#" class="btn">View Solutions</a>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-arrow prev" onclick="changeSlide(-1)">❮</button>
+      <button class="carousel-arrow next" onclick="changeSlide(1)">❯</button>
+      <div class="carousel-nav">
+        <div class="carousel-dot active" onclick="currentSlide(1)"> </div>
+        <div class="carousel-dot" onclick="currentSlide(2)"> </div>
+        <div class="carousel-dot" onclick="currentSlide(3)"> </div>
       </div>
     </section>
 
@@ -117,7 +173,7 @@
         <div class="footer-content">
           <div class="footer-section"><h3>Company</h3><a onclick="showPage('about')">About Us</a><a onclick="showPage('products')">Our Services</a><a onclick="showPage('projects')">Projects</a></div>
           <div class="footer-section"><h3>Support</h3><a onclick="showPage('contact')">Contact Us</a><a href="#">Technical Support</a><a href="#">Installation Guide</a></div>
-          <div class="footer-section"><h3>Contact Info</h3><a onclick="showPage('developers')">Developers</a><a href="https://www.facebook.com/Panramaheadoffice" target="_blank">📧 panramatechnologies.com</a><p>📞 (091) 653 7266</p><p>📍 Baliwag, Bulacan</p></div>
+          <div class="footer-section"><h3>Contact Info</h3><a href="https://www.facebook.com/Panramaheadoffice" target="_blank">📧 panramatechnologies.com</a><p>📞 (091) 653 7266</p><p>📍 Baliwag, Bulacan</p></div>
         </div>
         <div class="footer-bottom"><p>&copy; 2025 Panrama Technologies. All rights reserved.</p></div>
       </div>
@@ -216,7 +272,7 @@
         <div class="footer-content">
           <div class="footer-section"><h3>Company</h3><a onclick="showPage('about')">About Us</a><a onclick="showPage('products')">Our Services</a><a onclick="showPage('projects')">Projects</a></div>
           <div class="footer-section"><h3>Support</h3><a onclick="showPage('contact')">Contact Us</a><a href="#">Technical Support</a><a href="#">Installation Guide</a></div>
-          <div class="footer-section"><h3>Contact Info</h3><a onclick="showPage('developers')">Developers</a><a href="https://www.facebook.com/Panramaheadoffice" target="_blank">📧 panramatechnologies.com</a><p>📞 (091) 653 7266</p><p>📍 Baliwag, Bulacan</p></div>
+          <div class="footer-section"><h3>Contact Info</h3><a href="https://www.facebook.com/Panramaheadoffice" target="_blank">📧 panramatechnologies.com</a><p>📞 (091) 653 7266</p><p>📍 Baliwag, Bulacan</p></div>
         </div>
         <div class="footer-bottom"><p>&copy; 2025 Panrama Technologies. All rights reserved.</p></div>
       </div>
@@ -382,7 +438,7 @@
         <div class="footer-content">
           <div class="footer-section"><h3>Company</h3><a onclick="showPage('about')">About Us</a><a onclick="showPage('products')">Our Services</a><a onclick="showPage('projects')">Projects</a></div>
           <div class="footer-section"><h3>Support</h3><a onclick="showPage('contact')">Contact Us</a><a href="#">Technical Support</a><a href="#">Installation Guide</a></div>
-          <div class="footer-section"><h3>Contact Info</h3><a onclick="showPage('developers')">Developers</a><a href="https://www.facebook.com/Panramaheadoffice" target="_blank">📧 panramatechnologies.com</a><p>📞 (091) 653 7266</p><p>📍 Baliwag, Bulacan</p></div>
+          <div class="footer-section"><h3>Contact Info</h3><a href="https://www.facebook.com/Panramaheadoffice" target="_blank">📧 panramatechnologies.com</a><p>📞 (091) 653 7266</p><p>📍 Baliwag, Bulacan</p></div>
         </div>
         <div class="footer-bottom"><p>&copy; 2025 Panrama Technologies. All rights reserved.</p></div>
       </div>
@@ -520,7 +576,7 @@
         <div class="footer-content">
           <div class="footer-section"><h3>Company</h3><a onclick="showPage('about')">About Us</a><a onclick="showPage('products')">Our Services</a><a onclick="showPage('projects')">Projects</a></div>
           <div class="footer-section"><h3>Support</h3><a onclick="showPage('contact')">Contact Us</a><a href="#">Technical Support</a><a href="#">Installation Guide</a></div>
-          <div class="footer-section"><h3>Contact Info</h3><a onclick="showPage('developers')">Developers</a><a href="https://www.facebook.com/Panramaheadoffice" target="_blank">📧 panramatechnologies.com</a><p>📞 (091) 653 7266</p><p>📍 Baliwag, Bulacan</p></div>
+          <div class="footer-section"><h3>Contact Info</h3><a href="https://www.facebook.com/Panramaheadoffice" target="_blank">📧 panramatechnologies.com</a><p>📞 (091) 653 7266</p><p>📍 Baliwag, Bulacan</p></div>
         </div>
         <div class="footer-bottom"><p>&copy; 2025 Panrama Technologies. All rights reserved.</p></div>
       </div>
@@ -551,7 +607,7 @@
           <div class="contact-info reveal-left">
             <h2>Get in Touch with <span class="company-name">Panrama Technologies</span></h2>
             <div class="contact-details">
-              <div class="contact-item"><div class="icon">📧</div><div class="contact-item-content"><h4>Email Address</h4><p>info@panramatech.com</p></div></div>
+              <div class="contact-item"><div class="icon">📧</div><div class="contact-item-content"><h4>Email Address</h4><p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="61080f070e2111000f13000c00150402094f020e0c">[email&#160;protected]</a></p></div></div>
               <div class="contact-item"><div class="icon">📞</div><div class="contact-item-content"><h4>Phone Number</h4><p>(091) 653 7266</p></div></div>
               <div class="contact-item"><div class="icon">📍</div><div class="contact-item-content"><h4>Office Location</h4><p>Baliwag, Bulacan</p></div></div>
             </div>
@@ -592,41 +648,16 @@
         <div class="footer-content">
           <div class="footer-section"><h3>Company</h3><a onclick="showPage('about')">About Us</a><a onclick="showPage('products')">Our Services</a><a onclick="showPage('projects')">Projects</a></div>
           <div class="footer-section"><h3>Support</h3><a onclick="showPage('contact')">Contact Us</a><a href="#">Technical Support</a><a href="#">Installation Guide</a></div>
-          <div class="footer-section"><h3>Contact Info</h3><a onclick="showPage('developers')">Developers</a><a href="https://www.facebook.com/Panramaheadoffice" target="_blank">📧 panramatechnologies.com</a><p>📞 (091) 653 7266</p><p>📍 Baliwag, Bulacan</p></div>
+          <div class="footer-section"><h3>Contact Info</h3><a href="https://www.facebook.com/Panramaheadoffice" target="_blank">📧 panramatechnologies.com</a><p>📞 (091) 653 7266</p><p>📍 Baliwag, Bulacan</p></div>
         </div>
         <div class="footer-bottom"><p>&copy; 2025 Panrama Technologies. All rights reserved.</p></div>
       </div>
     </footer>
   </div><!-- /page-contact -->
 
-  <!-- ══════════════ PAGE: DEVELOPERS ══════════════ -->
-  <div class="page" id="page-developers">
-    <section class="developers-section">
-      <div class="container">
-        <h2 class="reveal">Meet Our <span class="company-name">Developers</span></h2>
-        <p class="reveal stagger-1">Our dedicated team of developers brings innovation and expertise to deliver top-tier security solutions.</p>
-        <div class="developers-grid">
-          <div class="developer-card reveal stagger-1"><img src="martin.jpg" alt="Martin Gaspar"><div class="developer-info"><h3>Martin Gaspar</h3><p>Lead Developer with expertise in security system integration.</p></div></div>
-          <div class="developer-card reveal stagger-2"><img src="inigo.jpg" alt="Rey Inigo Castillo"><div class="developer-info"><h3>Rey Inigo Castillo</h3><p>Software Engineer specializing in IoT and network solutions.</p></div></div>
-          <div class="developer-card reveal stagger-3"><img src="bangdud.jpg" alt="Jan Gabriel Bangdud"><div class="developer-info"><h3>Jan Gabriel Bangdud</h3><p>Frontend Developer focused on user-friendly interfaces.</p></div></div>
-          <div class="developer-card reveal stagger-4"><img src="flores.jpg" alt="Angelo Flores"><div class="developer-info"><h3>Angelo Flores</h3><p>Backend Developer with a passion for secure APIs.</p></div></div>
-        </div>
-      </div>
-    </section>
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-section"><h3>Company</h3><a onclick="showPage('about')">About Us</a><a onclick="showPage('products')">Our Services</a><a onclick="showPage('projects')">Projects</a></div>
-          <div class="footer-section"><h3>Support</h3><a onclick="showPage('contact')">Contact Us</a><a href="#">Technical Support</a><a href="#">Installation Guide</a></div>
-          <div class="footer-section"><h3>Contact Info</h3><a onclick="showPage('developers')">Developers</a><a href="https://www.facebook.com/Panramaheadoffice" target="_blank">📧 panramatechnologies.com</a><p>📞 (091) 653 7266</p><p>📍 Baliwag, Bulacan</p></div>
-        </div>
-        <div class="footer-bottom"><p>&copy; 2025 Panrama Technologies. All rights reserved.</p></div>
-      </div>
-    </footer>
-  </div><!-- /page-developers -->
 
   <!-- ══════════════ SCRIPTS ══════════════ -->
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // ── Page Navigation ───────────────────────────────────────────
   function showPage(pageId) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -747,12 +778,44 @@
 
   // ── Init ──────────────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', () => {
-    setupModal('productModal', 'prod-close', 'prod-modal-title', 'prod-modal-desc', 'prod-modal-features', 'prod-btn');
-    setupModal('projectModal', 'proj-close', 'proj-modal-title', 'proj-modal-desc', 'proj-modal-features', 'proj-btn');
+    setupModal('productModal', 'prod-close', 'prod-modal-title', 'prod-modal-desc', 'prod-modal-features', 'prod-view-btn');
+    setupModal('projectModal', 'proj-close', 'proj-modal-title', 'proj-modal-desc', 'proj-modal-features', 'proj-view-btn');
     initReveal();
     initCounters();
   });
-  </script>
 
+  // ── Carousel ──────────────────────────────────────────────────
+  let currentSlideIndex = 0;
+  const slides = document.querySelectorAll('.carousel-slide');
+  const dots   = document.querySelectorAll('.carousel-dot');
+
+  function showCarouselSlide(index) {
+    slides.forEach(s => { s.classList.remove('active'); const c = s.querySelector('.slide-content'); if (c) c.classList.remove('visible'); });
+    dots.forEach(d => d.classList.remove('active'));
+    slides[index].classList.add('active');
+    dots[index].classList.add('active');
+  }
+
+  function changeSlide(dir) {
+    currentSlideIndex = (currentSlideIndex + dir + slides.length) % slides.length;
+    showCarouselSlide(currentSlideIndex);
+  }
+
+  function currentSlide(n) {
+    currentSlideIndex = n - 1;
+    showCarouselSlide(currentSlideIndex);
+  }
+
+  slides.forEach((slide, i) => {
+    const img = slide.querySelector('img');
+    if (img) img.addEventListener('click', () => { const c = slide.querySelector('.slide-content'); if (c) c.classList.toggle('visible'); });
+  });
+
+  if (slides.length) {
+    showCarouselSlide(0);
+    setInterval(() => changeSlide(1), 5000);
+  }
+
+  </script>
 </body>
 </html>
